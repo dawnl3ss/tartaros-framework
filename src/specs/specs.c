@@ -44,3 +44,23 @@ void get_username(char *username, size_t size){
 
     pclose(fp);
 }
+
+void get_pwd(char *pwd, size_t size){
+    FILE *fp;
+    char path[1035];
+
+    fp = popen("basename `pwd`", "r");
+
+    if (fp == NULL) {
+        printf("Failed to run command\n");
+        exit(1);
+    }
+
+    if (fgets(path, sizeof(path), fp) != NULL) {
+        path[strcspn(path, "\n")] = '\0';
+        strncpy(pwd, path, size - 1);
+        pwd[size - 1] = '\0';
+    }
+
+    pclose(fp);
+}

@@ -7,5 +7,6 @@
 
 void get_hostname(char *hostname, size_t size);
 void get_username(char *username, size_t size);
+void get_pwd(char *pwd, size_t size);
 
 #endif
