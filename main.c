@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "src/specs/specs"
+#include "src/specs/specs.h"
 #include "src/display/ascii.h"
 #include "src/utils/utils.h"
 
@@ -32,11 +32,19 @@ int main(){
         fgets(command, 5000, stdin);
 
         if (!strcmp(command, "exit\n")) break;
-	
-	char months[] = "JAN,FEB,MAR,APR,MAY,JUN,JUL,AUG,SEP,OCT,NOV,DEC";
+
     	char** tokens;
+	
 
+	tokens = str_split(command, ' ');
+	
+	if (!strcmp(*(tokens), "cd")){
+	    if (!strcmp(*(tokens + 1)[0], '.') && !strcmp(*(tokens + 1)[1], '.')){
+		    printf("malveillan");
+	    }
+	}
 
+   
 
         printf("\n");
         system(command);
