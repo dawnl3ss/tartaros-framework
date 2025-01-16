@@ -5,6 +5,7 @@
 #include "src/specs/specs.h"
 #include "src/display/ascii.h"
 #include "src/utils/utils.h"
+#include "src/lib/str.h"
 
 int main(){
     // signal(SIGINT, SIG_IGN);
@@ -24,6 +25,7 @@ int main(){
     get_username(username, sizeof(username));
     get_pwd(current_dir, sizeof(current_dir));
 
+    //printf("!! TEST !! : %d\n", str_hspace("a f  b"));
 
     while (statement){
         char command[5000];
@@ -31,24 +33,28 @@ int main(){
         printf("[%s@%s] ~ /%s : ", username, hostname, current_dir);
         fgets(command, 5000, stdin);
 
+        // -- exit cmd
         if (!strcmp(command, "exit\n")) break;
 
-    	char** tokens;
-	
 
-	tokens = str_split(command, ' ');
-	
-	if (!strcmp(*(tokens), "cd")){
-	    if (!strcmp(*(tokens + 1)[0], '.') && !strcmp(*(tokens + 1)[1], '.')){
-		    printf("malveillan");
-	    }
-	}
+        if (str_hspace(command)){
+            char** tokens;
+	    tokens = str_split(command, ' ');
 
-   
+            if (tokens){
+                for (int i = 0; *(tokens + i); i++){
+                    printf("-> %s\n", *(tokens + i));
+                    free(*(tokens + i));
+                }
+                free(tokens);
+    	    }
 
-        printf("\n");
-        system(command);
-        printf("\n");
+
+        } else {
+            printf("\n");
+            system(command);
+            printf("\n");
+        }
 
     }
 
