@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "src/specs/specs.h"
 #include "src/display/ascii.h"
@@ -30,31 +31,33 @@ int main(){
     while (statement){
         char command[5000];
 
+        get_pwd(current_dir, sizeof(current_dir));
         printf("[%s@%s] ~ /%s : ", username, hostname, current_dir);
         fgets(command, 5000, stdin);
+        rm_nline(command);
 
         // -- exit cmd
-        if (!strcmp(command, "exit\n")) break;
+        if (my_strcmp(command, "exit")) break;
 
+        // -- cd system
+        if (str_include(command, "cd")){
 
-        if (str_hspace(command)){
             char** tokens;
 	    tokens = str_split(command, ' ');
-
-            if (tokens){
-                for (int i = 0; *(tokens + i); i++){
-                    printf("-> %s\n", *(tokens + i));
-                    free(*(tokens + i));
-                }
-                free(tokens);
-    	    }
-
-
-        } else {
-            printf("\n");
-            system(command);
-            printf("\n");
+            chdir(*(tokens + 1));
+            continue;
         }
+
+        if (my_strcmp(command, "htb")){
+            printf("\nHack The Box | Tool, made by dawnl3ss.\n\n");
+            continue;
+        }
+
+
+        printf("\n");
+        system(command);
+        printf("\n");
+        
 
     }
 

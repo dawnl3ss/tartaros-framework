@@ -1,13 +1,23 @@
 #include <stdio.h>
 #include <string.h>
 
-// False -> 0 | True -> 1
 
 /**
- *
+ * rm_nline : remove '\n' after string
+ */
+void rm_nline(char *str){
+    int len = strlen(str);
+
+    if (len > 0 && *(str + len - 1) == '\n'){
+        *(str + len - 1) = '\0';
+    }
+}
+
+
+/**
  * my_strcmp : strcmp built from scratch
  * !! We assume that 'source' and 'tocmp' have the same length
- *
+ * !! Depracated...
  */
 int my_strcmp(char* source, char* tocmp){
     if (strlen(source) != strlen(tocmp))
@@ -21,6 +31,9 @@ int my_strcmp(char* source, char* tocmp){
     return 1;
 }
 
+/**
+ * str_include : check if 'toinc' is in 'source'
+ */
 int str_include(char* source, char* toinc){
     for (size_t i = 0; *(source + i) != '\0'; i++){
         if (i >= strlen(toinc))
